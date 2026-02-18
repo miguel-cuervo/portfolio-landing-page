@@ -1,30 +1,34 @@
 <!DOCTYPE html>
-<html lang="es">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Miguel Cuervo | Portfolio </title>
     
-    <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;600&family=Poppins:wght@300;400;600;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;600&family=Poppins:wght@300;400;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     
     <style>
-        /* --- VARIABLES DE COLOR --- */
+        /* --- COLOR VARIABLES --- */
         :root {
-            --bg-dark: #050505;
+            --bg-dark: #0a0a0a;
+            --bg-card: #161616;
             --text-primary: #ffffff;
             --text-secondary: #a0a0a0;
             --accent: #00f2ff; 
-            --accent-dark: #008c94;
-            --glass-bg: rgba(20, 20, 20, 0.8);
+            --accent-glow: rgba(0, 242, 255, 0.15);
             --border-color: #333;
         }
 
-        /* --- RESET BÁSICO --- */
+        /* --- BASIC RESET --- */
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
         }
 
         body {
@@ -32,12 +36,22 @@
             background-color: var(--bg-dark);
             color: var(--text-primary);
             line-height: 1.6;
-            overflow-x: hidden; /* Evita scroll lateral */
+            overflow-x: hidden;
         }
 
-        /* --- HEADER / PORTADA --- */
+        /* --- ANIMATIONS --- */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .fade-in-element {
+            animation: fadeIn 1s ease-out forwards;
+        }
+
+        /* --- HEADER / HERO --- */
         header {
-            min-height: 100vh;
+            min-height: 90vh; /* Slightly shorter for modern look */
             display: flex;
             flex-direction: column;
             justify-content: center;
@@ -49,213 +63,259 @@
             z-index: 1;
         }
 
-        /* Decoración de fondo (Líneas) */
+        /* Background Grid Decoration */
         header::before {
             content: '';
             position: absolute;
             top: 0; left: 0; width: 100%; height: 100%;
-            background-image: linear-gradient(rgba(255, 255, 255, 0.05) 1px, transparent 1px),
-            linear-gradient(90deg, rgba(255, 255, 255, 0.05) 1px, transparent 1px);
-            background-size: 40px 40px;
-            z-index: -1; /* Se asegura de estar DETRÁS del texto */
-            opacity: 0.3;
+            background-image: 
+                linear-gradient(rgba(255, 255, 255, 0.03) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
+            background-size: 50px 50px;
+            z-index: -1;
         }
 
         h1 {
-            font-size: 4rem;
+            font-size: 4.5rem;
             font-weight: 800;
             line-height: 1.1;
-            margin-bottom: 15px;
+            margin-bottom: 20px;
+            letter-spacing: -2px;
             text-transform: uppercase;
             color: white;
-            text-shadow: 0 0 20px rgba(0, 242, 255, 0.2);
-            z-index: 2;
+            text-shadow: 0 0 30px rgba(0, 242, 255, 0.1);
         }
 
         .role-badge {
             font-family: 'Fira Code', monospace;
-            background: rgba(0, 242, 255, 0.1);
+            background: rgba(0, 242, 255, 0.05);
             color: var(--accent);
-            padding: 8px 20px;
-            border-radius: 4px;
-            border: 1px solid var(--accent-dark);
-            font-size: 0.9rem;
-            margin-bottom: 30px;
+            padding: 10px 25px;
+            border-radius: 50px; /* Pill shape is more modern */
+            border: 1px solid rgba(0, 242, 255, 0.3);
+            font-size: 0.95rem;
+            margin-bottom: 35px;
             display: inline-block;
-            z-index: 2;
+            backdrop-filter: blur(5px);
         }
 
         .social-links {
             display: flex;
-            gap: 25px;
-            z-index: 2;
+            gap: 30px;
         }
 
         .social-links a {
             color: var(--text-secondary);
-            font-size: 1.8rem;
+            font-size: 1.6rem;
             transition: all 0.3s ease;
+            position: relative;
         }
 
         .social-links a:hover {
             color: var(--accent);
-            transform: scale(1.1);
+            transform: translateY(-3px);
+            text-shadow: 0 0 15px var(--accent);
         }
 
-        /* --- CONTENEDOR PRINCIPAL --- */
+        /* --- MAIN CONTAINER --- */
         .container {
-            max-width: 1100px;
+            max-width: 1200px;
             margin: 0 auto;
-            padding: 80px 20px;
+            padding: 100px 20px;
             position: relative;
             z-index: 2;
         }
 
         .section-header {
-            margin-bottom: 50px;
-            border-left: 4px solid var(--accent);
-            padding-left: 20px;
+            margin-bottom: 60px;
+            border-left: 5px solid var(--accent);
+            padding-left: 25px;
         }
 
         .section-header h2 {
-            font-size: 2.2rem;
+            font-size: 2.5rem;
             font-weight: 700;
+            margin-bottom: 10px;
         }
 
         .section-header p {
             color: var(--text-secondary);
-            margin-top: 5px;
+            font-size: 1.1rem;
         }
 
-        /* --- TARJETAS DE PROYECTOS --- */
+        /* --- BIO SECTION --- */
+        .bio-text {
+            margin-bottom: 100px;
+            color: #ccc;
+            max-width: 850px;
+            font-size: 1.1rem;
+            line-height: 1.8;
+            opacity: 0; /* For animation */
+            animation-delay: 0.3s;
+        }
+
+        /* --- PROJECT CARDS --- */
         .projects-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 30px;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 40px;
         }
 
         .project-card {
-            background-color: #111; /* Fondo sólido de seguridad */
-            background: linear-gradient(145deg, #111, #161616);
-            border: 1px solid #333;
-            border-radius: 15px;
-            padding: 30px;
-            transition: transform 0.3s ease;
+            background: #111;
+            background: linear-gradient(145deg, #131313, #0f0f0f);
+            border: 1px solid #2a2a2a;
+            border-radius: 20px;
+            padding: 35px;
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
             display: flex;
             flex-direction: column;
             justify-content: space-between;
+            position: relative;
+            overflow: hidden;
         }
 
+        /* Hover Effect: Glow */
         .project-card:hover {
-            transform: translateY(-5px);
-            border-color: var(--accent);
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+            transform: translateY(-10px);
+            border-color: rgba(0, 242, 255, 0.5);
+            box-shadow: 0 20px 40px -10px rgba(0, 0, 0, 0.7);
         }
 
+        /* Tech Stack Tags */
         .tech-stack {
-            margin-bottom: 15px;
+            margin-bottom: 20px;
             font-family: 'Fira Code', monospace;
-            font-size: 0.75rem;
+            font-size: 0.7rem;
             display: flex;
+            flex-wrap: wrap;
             gap: 10px;
         }
 
         .tech-tag {
-            padding: 4px 10px;
-            border-radius: 4px;
-            background: #222;
-            color: #ccc;
-            border: 1px solid #444;
+            padding: 5px 12px;
+            border-radius: 6px;
+            background: rgba(255, 255, 255, 0.03);
+            color: #aaa;
+            border: 1px solid #333;
+            letter-spacing: 0.5px;
         }
 
-        .tag-r { color: #6faef7; border-color: #276DC3; }
-        .tag-excel { color: #6dd68e; border-color: #217346; }
-        .tag-pbi { color: #f2c811; border-color: #b3950e; }
+        /* Custom Colors for Tags */
+        .tag-r { color: #8cbbf7; border-color: #276DC3; background: rgba(39, 109, 195, 0.1); }
+        .tag-excel { color: #85e0a3; border-color: #217346; background: rgba(33, 115, 70, 0.1); }
+        .tag-pbi { color: #fce056; border-color: #b3950e; background: rgba(179, 149, 14, 0.1); }
+        .tag-sql { color: #ffab40; border-color: #e65100; background: rgba(230, 81, 0, 0.1); } /* NEW SQL COLOR */
 
         .project-card h3 {
-            font-size: 1.5rem;
-            margin-bottom: 10px;
+            font-size: 1.6rem;
+            margin-bottom: 15px;
             color: white;
+            font-weight: 600;
         }
 
         .project-card p {
             color: #bbb;
             font-size: 0.95rem;
-            margin-bottom: 25px;
-            line-height: 1.6;
+            margin-bottom: 30px;
+            line-height: 1.7;
         }
 
+        /* Button */
         .btn {
-            display: inline-block;
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
             text-decoration: none;
             color: var(--accent);
             font-weight: 600;
             border: 1px solid var(--accent);
-            padding: 10px 20px;
-            border-radius: 5px;
-            text-align: center;
-            transition: background 0.3s, color 0.3s;
+            padding: 12px 25px;
+            border-radius: 8px;
+            transition: all 0.3s ease;
             width: fit-content;
+            font-size: 0.9rem;
         }
 
         .btn:hover {
             background: var(--accent);
             color: #000;
+            box-shadow: 0 0 20px var(--accent-glow);
         }
 
         /* --- FOOTER --- */
         footer {
             text-align: center;
-            padding: 40px 20px;
+            padding: 60px 20px;
             border-top: 1px solid #222;
-            color: #666;
+            color: #555;
             font-size: 0.85rem;
-            margin-top: 50px;
+            margin-top: 80px;
+            background: #050505;
         }
 
-        /* --- MÓVIL --- */
+        /* --- MOBILE --- */
         @media (max-width: 768px) {
-            h1 { font-size: 2.5rem; }
-            .section-header h2 { font-size: 1.8rem; }
+            h1 { font-size: 2.8rem; }
+            .section-header h2 { font-size: 2rem; }
+            .project-card { padding: 25px; }
         }
     </style>
 </head>
 <body>
 
-    <header>
-        <h1>MIGUEL A.<br>CUERVO PALACIOS</h1>
+    <header class="fade-in-element">
+        <h1>Miguel A.<br>Cuervo Palacios</h1>
         <div class="role-badge">
             <i class="fas fa-database"></i> INDUSTRIAL & SYSTEMS ENGINEER 
         </div>
         
         <div class="social-links">
-            <a href="https://github.com/miguel-cuervo" target="_blank"><i class="fab fa-github"></i></a>
-            <a href="https://linkedin.com/in/miguel-a-cuervo-8388aa201/" target="_blank"><i class="fab fa-linkedin"></i></a>
-            <a href="mailto:mcuervo9@outlook.com"><i class="fas fa-envelope"></i></a>
+            <a href="https://github.com/miguel-cuervo" target="_blank" aria-label="GitHub"><i class="fab fa-github"></i></a>
+            <a href="https://linkedin.com/in/miguel-a-cuervo-8388aa201/" target="_blank" aria-label="LinkedIn"><i class="fab fa-linkedin"></i></a>
+            <a href="mailto:mcuervo9@outlook.com" aria-label="Email"><i class="fas fa-envelope"></i></a>
         </div>
     </header>
 
     <div class="container">
         
-        <div class="section-header">
+        <div class="section-header fade-in-element" style="animation-delay: 0.2s;">
             <h2>Professional Summary</h2>
-            <p>Engineering and Analitics</p>
+            <p>Bridging Engineering & Data Analytics</p>
         </div>
 
-        <div style="margin-bottom: 80px; color: #ddd; max-width: 800px;">
+        <div class="bio-text fade-in-element">
             <p>
-               Industrial and Systems Engineer with a passion for efficiency and systems thinking. Currently working as a Process Engineer, I focus on optimizing operational workflows and problem-solving in a manufacturing environment.
-To further enhance my analytical capabilities, I recently completed the Google Data Analytics Professional Certificate. I am actively building a foundational proficiency in SQL, Power BI and R to complement my engineering background, with the goal of eventually translating these new technical skills into Business Intelligence and data-driven decision-making.
+                Recently graduated Industrial and Systems Engineer specialized in production and supply planning, with hands-on experience managing MRP, capacity planning, BOM structures and inventory alignment in make-to-order and project-based manufacturing environments.
+                <br><br>
+                Strong analytical profile leveraging Excel, SQL, Power BI, and ERP systems to improve planning accuracy, material availability, and on-time delivery. Proven ability to translate operational data into actionable planning decisions in manufacturing contexts.
             </p>
         </div>
 
-        <div class="section-header">
+        <div class="section-header fade-in-element" style="animation-delay: 0.4s;">
             <h2>Recent Projects</h2>
-            <p>Applied case studies</p>
+            <p>Data-Driven Case Studies</p>
         </div>
         
-        <div class="projects-grid">
+        <div class="projects-grid fade-in-element" style="animation-delay: 0.5s;">
             
+            <article class="project-card">
+                <div>
+                    <div class="tech-stack">
+                        <span class="tech-tag tag-sql">SQL</span>
+                        <span class="tech-tag">SUPPLY CHAIN</span>
+                        <span class="tech-tag">DBEAVER / POSTGRESQL</span>
+                    </div>
+                    <h3>Supply Chain Efficiency Analysis</h3>
+                    <p>
+                        Strategic analysis of 180,000+ shipping records. Use of SQL to identify bottlenecks and pinpoint top-performing regions to drive operational improvements.
+                    </p>
+                </div>
+                <a href="https://github.com/miguel-cuervo/dataco-supplychain-dataset-analysis" target="_blank" class="btn">
+                    View Project <i class="fas fa-arrow-right"></i>
+                </a>
+            </article>
+
             <article class="project-card">
                 <div>
                     <div class="tech-stack">
@@ -265,11 +325,11 @@ To further enhance my analytical capabilities, I recently completed the Google D
                     </div>
                     <h3>Cyclistic Case Study</h3>
                     <p>
-                        Large data analysis for a shared bicycle rental company in Chicago. Data cleaning for over 500,000 entries and visualization with ggplot2 in order to detect patterns and draw insights.
+                        Comprehensive data analysis for a Chicago bike-share company. Cleaned and processed 500,000+ trip records using R, creating visualizations with ggplot2 to reveal rider usage patterns.
                     </p>
                 </div>
                 <a href="https://miguel-cuervo.github.io/case-study-1-cyclistic/" target="_blank" class="btn">
-                    Go To Project <i class="fas fa-arrow-right"></i>
+                    View Project <i class="fas fa-arrow-right"></i>
                 </a>
             </article>
 
@@ -280,44 +340,42 @@ To further enhance my analytical capabilities, I recently completed the Google D
                         <span class="tech-tag">POWER QUERY</span>
                         <span class="tech-tag">DASHBOARD</span>
                     </div>
-                    <h3>Online Retail II - ABC Product Analysis</h3>
+                    <h3>Retail ABC Analysis</h3>
                     <p>
-                        Dashboard for online retail product analysis for 2 years. Use of Power Query, Pivot tables, Graphics and Formulas for agile and accesible reporting.
+                        Interactive dashboard for online retail product analysis over a 2-year period. Leveraged Power Query and Pivot Tables for agile reporting and inventory classification.
                     </p>
                 </div>
                 <a href="https://github.com/miguel-cuervo/online-retail-II-ABC-product-analysis" target="_blank" class="btn">
-                    Go To Project <i class="fas fa-arrow-right"></i>
+                    View Project <i class="fas fa-arrow-right"></i>
                 </a>
             </article>
+
             <article class="project-card">
-    <div>
-        <div class="tech-stack">
-            <span class="tech-tag tag-pbi">POWER BI</span>
-            <span class="tech-tag">DASHBOARD</span>
-            <span class="tech-tag">DATA VIZ</span>
-        </div>
-        <h3>Cyclistic Power BI Dashboard</h3>
-        <p>
-            An interactive dashboard visualizing the Cyclistic project analysis. Features include dynamic filtering, new custom table and model relation, and trend analysis to support data-driven decision-making.
-        </p>
-    </div>
-    <a href="https://github.com/miguel-cuervo/cyclistic-PBI-dashboard" target="_blank" class="btn">
-        Go To Project <i class="fas fa-arrow-right"></i>
-    </a>
-</article>
+                <div>
+                    <div class="tech-stack">
+                        <span class="tech-tag tag-pbi">POWER BI</span>
+                        <span class="tech-tag">DAX</span>
+                        <span class="tech-tag">DATA VIZ</span>
+                    </div>
+                    <h3>Cyclistic Interactive Dashboard</h3>
+                    <p>
+                        A dynamic Power BI dashboard visualizing Cyclistic rider trends. Features include custom data modeling, interactive filtering, and trend analysis to support executive decision-making.
+                    </p>
+                </div>
+                <a href="https://github.com/miguel-cuervo/cyclistic-PBI-dashboard" target="_blank" class="btn">
+                    View Project <i class="fas fa-arrow-right"></i>
+                </a>
+            </article>
 
         </div>
     </div>
 
     <footer>
-        <p>2025 Miguel Cuervo - Portfolio - V1.1</p>
+        <p>&copy; 2025 Miguel Cuervo | Engineering & Analytics Portfolio</p>
     </footer>
 
 </body>
-
 </html>
-
-
 
 
 
